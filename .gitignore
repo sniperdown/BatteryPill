@@ -1,0 +1,18 @@
+# 构建产物
+*.exe
+*.pdb
+bin/
+obj/
+
+# 运行时数据
+settings.ini
+battery-log.csv
+*.log
+
+# 开发/调试脚本（不进仓库）
+__pycache__/
+probe_*.py
+hidwin.py
+/pill.png
+x
+src/dev/

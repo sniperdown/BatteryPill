@@ -1,0 +1,23 @@
+/nologo
+/codepage:65001
+/target:winexe
+/out:..\BatteryPill.exe
+/win32manifest:app.manifest
+/langversion:9
+/optimize+
+/r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll"
+/r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll"
+/r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Core.dll"
+/r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Drawing.dll"
+/r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Windows.Forms.dll"
+/r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Web.Extensions.dll"
+Native.cs
+Hid.cs
+Logitech.cs
+Ghub.cs
+Settings.cs
+Layered.cs
+PillWindow.cs
+RawMouseWatcher.cs
+PanelForm.cs
+Program.cs
