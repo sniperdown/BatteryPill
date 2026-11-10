@@ -75,6 +75,14 @@ namespace BatteryPill
         [STAThread]
         private static void Main(string[] args)
         {
+            if (args.Length >= 2 && args[0] == "--shot")
+            {
+                float scale = 2f;
+                if (args.Length >= 3) float.TryParse(args[2], out scale);
+                ShotMode.Run(args[1], scale > 0 ? scale : 2f);
+                return;
+            }
+
             bool created;
             using (var mutex = new Mutex(true, "BatteryPill_SingleInstance", out created))
             {

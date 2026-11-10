@@ -248,12 +248,24 @@ namespace BatteryPill
         private void Render()
         {
             if (!IsAlive) return;
+            using (var bmp = DrawBitmap(Math.Max(8, _w), Math.Max(8, _h), _scale)) Present(bmp);
+        }
+
+        /// <summary>离屏渲染（生成文档截图用，不依赖窗口）。</summary>
+        public Bitmap DrawBitmap(int w, int h, float scale)
+        {
+            _scale = scale;
+            _w = w;
+            _h = h;
+            var bmp = new Bitmap(w, h, PixelFormat.Format32bppArgb);
+            using (var g = Graphics.FromImage(bmp)) DrawInto(g, bmp);
+            return bmp;
+        }
+
+        private void DrawInto(Graphics g, Bitmap bmp)
+        {
             int w = Math.Max(8, _w), h = Math.Max(8, _h);
             float s = _scale;
-
-            using (var bmp = new Bitmap(w, h, PixelFormat.Format32bppArgb))
-            using (var g = Graphics.FromImage(bmp))
-            {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
@@ -318,9 +330,6 @@ namespace BatteryPill
 
                 if (Environment.GetEnvironmentVariable("BATTERYPILL_DEBUG") == "1")
                     bmp.Save(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "pill.png"), ImageFormat.Png);
-
-                Present(bmp);
-            }
         }
 
         private void Present(Bitmap bitmap)

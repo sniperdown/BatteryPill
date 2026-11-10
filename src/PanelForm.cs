@@ -161,15 +161,27 @@ namespace BatteryPill
         private void Render()
         {
             if (!IsHandleCreated) return;
-            float s = DpiScale;
-            int w = (int)Math.Round(PanelWidthDip * s);
-            int h = (int)Math.Round(PanelHeightDip * s);
+            using (var bmp = DrawBitmap(DpiScale)) Present(bmp, _x, _y);
+        }
 
-            using (var bmp = new Bitmap(w, h, PixelFormat.Format32bppArgb))
+        /// <summary>离屏渲染（生成文档截图用）。</summary>
+        public Bitmap DrawBitmap(float scale)
+        {
+            ScaleOverride = scale;
+            int w = (int)Math.Round(PanelWidthDip * scale);
+            int h = (int)Math.Round(PanelHeightDip * scale);
+            var bmp = new Bitmap(w, h, PixelFormat.Format32bppArgb);
             using (var g = Graphics.FromImage(bmp))
             {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                DrawInto(g, w, h, scale);
+            }
+            return bmp;
+        }
+
+        private void DrawInto(Graphics g, int w, int h, float s)
+        {
 
                 var body = new RectangleF(1 * s, 1 * s, w - 2 * s, h - 2 * s);
                 using (var path = Rounded.Rect(body, 13 * s))
@@ -205,7 +217,7 @@ namespace BatteryPill
                     }
                     string sub = _reading != null && _reading.Stale ? "设备无响应 · 显示上次读数"
                                : charging ? (_reading.Full ? "已充满 · 外部供电" : "充电中 · 外部供电")
-                                          : "2.4G · Logi Bolt 接收器";
+                                          : "2.4G · LIGHTSPEED 接收器";
                     g.DrawString(sub, subFont, grey, 18 * s, 36 * s);
 
                     bool realPercent = _reading != null && _reading.Source == "G HUB";
@@ -281,8 +293,6 @@ namespace BatteryPill
                 bool armed = (DateTime.Now - _exitArmedAt).TotalSeconds < 5;
                 DrawButton(g, s, 2, armed ? "确认退出" : "退出", armed);
 
-                Present(bmp, _x, _y);
-            }
         }
 
         private void DrawButton(Graphics g, float s, int index, string label, bool active)

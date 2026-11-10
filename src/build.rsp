@@ -21,3 +21,4 @@ PillWindow.cs
 RawMouseWatcher.cs
 PanelForm.cs
 Program.cs
+ShotMode.cs

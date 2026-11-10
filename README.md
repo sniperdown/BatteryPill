@@ -19,13 +19,20 @@
 
 ## 界面
 
-| 面板 | 充电中 |
+胶囊有四种状态：
+
+| 正常 | 充电中 | 睡眠（灰色） | 低电量 |
+|---|---|---|---|
+| ![normal](docs/pill.png) | ![charging](docs/pill_charging.png) | ![asleep](docs/pill_asleep.png) | ![low](docs/pill_low.png) |
+
+点开是面板：
+
+| 无线 | 充电中 |
 |---|---|
-| ![panel](docs/panel.png) | ![charging](docs/charging.png) |
+| ![panel](docs/panel.png) | ![charging panel](docs/panel_charging.png) |
 
-鼠标图标和闪电都是用 GDI+ 现画的矢量图形，项目里没有位图资源：
-
-![icon](docs/icon_zoom.png)
+鼠标图标和闪电都是 GDI+ 现画的矢量图形，项目里没有位图资源；上面这些图由
+`BatteryPill.exe --shot <目录> [缩放]` 离屏渲染生成——不截屏、不依赖任务栏，换台机器也能复现。
 
 ## 装在哪、怎么开
 

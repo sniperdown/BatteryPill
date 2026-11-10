@@ -9,6 +9,7 @@ namespace BatteryPill
     internal class LayeredForm : Form
     {
         protected bool NoActivate;
+        protected float ScaleOverride;
 
         public LayeredForm()
         {
@@ -36,6 +37,7 @@ namespace BatteryPill
         {
             get
             {
+                if (ScaleOverride > 0) return ScaleOverride;
                 uint dpi = Native.GetDpiForWindow(Handle);
                 if (dpi == 0) dpi = 96;
                 return dpi / 96f;
